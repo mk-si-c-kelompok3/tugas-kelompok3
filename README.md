@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
@@ -59,3 +60,15 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+=======
+# tugas-kelompok3
+pengumpulan tugas mata kuliah Penjaminan Mutu
+# ANGGOTA KELOMPOK:
+Andini Artika sebagai projec manager
+kadek surya sebagai database
+fahriadi sebagai UI/UX
+Muh Yusuf sebagai Frontend
+joshua riman kape sebagai backend
+# UI/UX Sistem: 
+https://www.figma.com/design/pCJJ6aoJPNR5DL9Pqxq7gF/Untitled?node-id=1-129&t=d9AMBsottfKw7zLj-1 
+>>>>>>> c93eec337577effe9e6b784d1622d701e4cd2471
