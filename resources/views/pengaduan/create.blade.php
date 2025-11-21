@@ -1,94 +1,73 @@
 @extends('layouts.app')
-@section('title', 'Form Pengaduan')
+@section('title', 'Buat Pengaduan')
 
 @section('content')
-  <div class="row justify-content-center">
-    <div class="col-lg-8 col-xl-7">
-      <a href="{{ route('pengaduan.index') }}" class="btn btn-outline-secondary mb-3">
-        <i class="bi bi-arrow-left"></i> Kembali
-      </a>
+    <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
+        <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="p-6 text-gray-900">
 
-      {{-- Notifikasi sukses --}}
-      @if (session('ok'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-          <i class="bi bi-check-circle me-2"></i>{{ session('ok') }}
-          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                <h2 class="text-xl font-semibold mb-4">Buat Pengaduan</h2>
+
+                {{-- Tampilkan error validasi kalau ada --}}
+                @if ($errors->any())
+                    <div class="mb-4 text-sm text-red-600">
+                        <ul class="list-disc pl-5 space-y-1">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
+                <form action="{{ route('pengaduan.store') }}" method="POST">
+                    @csrf
+
+                    {{-- Nama --}}
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700">Nama</label>
+                        <input
+                            type="text"
+                            name="nama"
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+                            value="{{ old('nama', auth()->user()->name ?? '') }}"
+                        >
+                    </div>
+
+                    {{-- Judul --}}
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700">Judul Pengaduan</label>
+                        <input
+                            type="text"
+                            name="judul"
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+                            value="{{ old('judul') }}"
+                        >
+                    </div>
+
+                    {{-- Isi --}}
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700">Isi Pengaduan</label>
+                        <textarea
+                            name="isi"
+                            rows="5"
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+                        >{{ old('isi') }}</textarea>
+                    </div>
+
+                    <div class="flex justify-end gap-2">
+                        <a href="{{ route('pengaduan.index') }}"
+                           class="inline-flex items-center px-4 py-2 bg-gray-200 border border-transparent rounded-md text-xs font-semibold text-gray-700 uppercase tracking-widest hover:bg-gray-300">
+                            Batal
+                        </a>
+
+                        <button type="submit"
+                                class="inline-flex items-center px-4 py-2 bg-indigo-600 border border-transparent rounded-md text-xs font-semibold text-white uppercase tracking-widest hover:bg-indigo-700">
+                            Kirim Pengaduan
+                        </button>
+                    </div>
+                </form>
+
+            </div>
         </div>
-      @endif
-
-      {{-- Ringkasan error --}}
-      @if ($errors->any())
-        <div class="alert alert-danger">
-          <div class="fw-semibold mb-1"><i class="bi bi-exclamation-triangle me-1"></i>Periksa kembali:</div>
-          <ul class="mb-0 ps-3">
-            @foreach ($errors->all() as $e)
-              <li>{{ $e }}</li>
-            @endforeach
-          </ul>
-        </div>
-      @endif
-
-      <div class="card card-shadow">
-        <div class="card-header bg-white">
-          <h5 class="mb-0"><i class="bi bi-megaphone text-primary me-2"></i>Form Pengaduan</h5>
-        </div>
-        <div class="card-body">
-          <form action="{{ route('pengaduan.store') }}" method="POST" novalidate>
-            @csrf
-
-            <div class="mb-3">
-              <label class="form-label required">Nama</label>
-              <div class="input-group">
-                <span class="input-group-text"><i class="bi bi-person"></i></span>
-                <input type="text" name="nama"
-                       value="{{ old('nama') }}"
-                       class="form-control @error('nama') is-invalid @enderror"
-                       placeholder="Nama lengkap pelapor" autofocus>
-                @error('nama') <div class="invalid-feedback">{{ $message }}</div> @enderror
-              </div>
-            </div>
-
-            <div class="mb-3">
-              <label class="form-label">Kontak (Email/WA)</label>
-              <div class="input-group">
-                <span class="input-group-text"><i class="bi bi-envelope"></i></span>
-                <input type="text" name="kontak"
-                       value="{{ old('kontak') }}"
-                       class="form-control @error('kontak') is-invalid @enderror"
-                       placeholder="email@contoh.com atau 08xxxx">
-                @error('kontak') <div class="invalid-feedback">{{ $message }}</div> @enderror
-              </div>
-              <div class="form-text">Opsional, namun memudahkan admin menghubungi balik.</div>
-            </div>
-
-            <div class="mb-3">
-              <label class="form-label required">Judul</label>
-              <div class="input-group">
-                <span class="input-group-text"><i class="bi bi-flag"></i></span>
-                <input type="text" name="judul"
-                       value="{{ old('judul') }}"
-                       class="form-control @error('judul') is-invalid @enderror"
-                       placeholder="Mis. Jalan rusak, Lampu mati, dll">
-                @error('judul') <div class="invalid-feedback">{{ $message }}</div> @enderror
-              </div>
-            </div>
-
-            <div class="mb-3">
-              <label class="form-label required">Isi Pengaduan</label>
-              <textarea name="isi" rows="5"
-                        class="form-control @error('isi') is-invalid @enderror"
-                        placeholder="Jelaskan lokasi/kejadian, detail keluhan, dan harapan penanganan...">{{ old('isi') }}</textarea>
-              @error('isi') <div class="invalid-feedback">{{ $message }}</div> @enderror
-            </div>
-
-            <div class="d-grid d-sm-flex justify-content-end gap-2">
-              <button class="btn btn-primary px-4">
-                <i class="bi bi-send me-1"></i> Kirim Pengaduan
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-
     </div>
-  </div>
+@endsection

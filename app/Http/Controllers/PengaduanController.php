@@ -45,4 +45,9 @@ class PengaduanController extends Controller
         $pengaduan->delete();
         return back()->with('ok', 'Data dihapus.');
     }
+    public function show(Pengaduan $pengaduan)
+{
+    return view('pengaduan.show', compact('pengaduan'));
+}
+
 }
